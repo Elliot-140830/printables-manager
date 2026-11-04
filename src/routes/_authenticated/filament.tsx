@@ -38,9 +38,9 @@ function FilamentPage() {
     setOpen(true);
   };
   async function save() {
-    if (!f.color.trim()) return toast.error("Ange färg");
+    if (!f.color.trim()) { toast.error("Ange färg"); return; }
     const { error } = edit ? await supabase.from("filaments").update(f).eq("id", edit.id) : await supabase.from("filaments").insert(f);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Filament sparat");
     setOpen(false);
     invalidate("filaments");
@@ -48,7 +48,7 @@ function FilamentPage() {
   async function remove(x: Filament) {
     if (!confirm(`Ta bort ${x.color}?`)) return;
     const { error } = await supabase.from("filaments").delete().eq("id", x.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     invalidate("filaments");
   }
   const num = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement>) => setF({ ...f, [k]: Number(e.target.value) });

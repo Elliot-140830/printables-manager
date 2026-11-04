@@ -40,7 +40,7 @@ export const useExpenses = () =>
 export const useAllocations = () =>
   useQuery({ queryKey: ["allocations"], queryFn: async () => unwrap(await supabase.from("allocations").select("*").order("created_at")) });
 export const useSettings = () =>
-  useQuery({ queryKey: ["settings"], queryFn: async () => unwrap(await supabase.from("settings").select("*").eq("id", 1).single()) });
+  useQuery({ queryKey: ["settings"], queryFn: async (): Promise<Settings> => unwrap(await supabase.from("settings").select("*").eq("id", 1).single()) as Settings });
 export const useOrders = () =>
   useQuery({
     queryKey: ["orders"],

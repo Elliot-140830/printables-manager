@@ -63,7 +63,7 @@ function Models() {
   }
 
   async function save() {
-    if (!f.name.trim()) return toast.error("Ange namn");
+    if (!f.name.trim()) { toast.error("Ange namn"); return; }
     setBusy(true);
     try {
       const row: Record<string, unknown> = {
@@ -71,8 +71,8 @@ function Models() {
         grams: Number(f.grams), print_minutes: Number(f.print_minutes),
         price_override: f.price_override === "" ? null : Number(f.price_override),
       };
-      if (stl) row.stl_path = await upload(stl, "stl");
-      if (img) row.image_path = await upload(img, "images");
+      if (stl) row['stl_path'] = await upload(stl, "stl");
+      if (img) row['image_path'] = await upload(img, "images");
       const { error } = edit
         ? await supabase.from("products").update(row as never).eq("id", edit.id)
         : await supabase.from("products").insert(row as never);
@@ -88,7 +88,7 @@ function Models() {
   async function remove(p: Product) {
     if (!confirm(`Ta bort ${p.name}?`)) return;
     const { error } = await supabase.from("products").delete().eq("id", p.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     invalidate("products");
   }
 

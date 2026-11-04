@@ -35,9 +35,9 @@ function Economy() {
 
   const [ex, setEx] = useState({ description: "", amount: "", category: "Material", date: today() });
   async function addExpense() {
-    if (!ex.description || !ex.amount) return toast.error("Fyll i beskrivning och belopp");
+    if (!ex.description || !ex.amount) { toast.error("Fyll i beskrivning och belopp"); return; }
     const { error } = await supabase.from("expenses").insert({ ...ex, amount: Number(ex.amount) });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setEx({ description: "", amount: "", category: "Material", date: today() });
     invalidate("expenses");
   }

@@ -26,6 +26,6 @@ describe("pricing", () => {
     });
     expect(s.tax).toBe(25);
     expect(s.profit).toBe(75);
-    expect(s.allocations[0].amount).toBe(7.5);
+    expect(s.allocations[0]?.amount).toBe(7.5);
   });
 });
