@@ -10,33 +10,118 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedOrdrarRouteImport } from './routes/_authenticated/ordrar'
+import { Route as AuthenticatedOversiktRouteImport } from './routes/_authenticated/oversikt'
+import { Route as AuthenticatedPlattorRouteImport } from './routes/_authenticated/plattor'
+import { Route as AuthenticatedProduktionRouteImport } from './routes/_authenticated/produktion'
+import { Route as AuthenticatedKvittoIdRouteImport } from './routes/_authenticated/kvitto.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedOrdrarRoute = AuthenticatedOrdrarRouteImport.update({
+  id: '/ordrar',
+  path: '/ordrar',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOversiktRoute = AuthenticatedOversiktRouteImport.update({
+  id: '/oversikt',
+  path: '/oversikt',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPlattorRoute = AuthenticatedPlattorRouteImport.update({
+  id: '/plattor',
+  path: '/plattor',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProduktionRoute = AuthenticatedProduktionRouteImport.update({
+  id: '/produktion',
+  path: '/produktion',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedKvittoIdRoute = AuthenticatedKvittoIdRouteImport.update({
+  id: '/kvitto/$id',
+  path: '/kvitto/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ordrar': typeof AuthenticatedOrdrarRoute
+  '/oversikt': typeof AuthenticatedOversiktRoute
+  '/plattor': typeof AuthenticatedPlattorRoute
+  '/produktion': typeof AuthenticatedProduktionRoute
+  '/kvitto/$id': typeof AuthenticatedKvittoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ordrar': typeof AuthenticatedOrdrarRoute
+  '/oversikt': typeof AuthenticatedOversiktRoute
+  '/plattor': typeof AuthenticatedPlattorRoute
+  '/produktion': typeof AuthenticatedProduktionRoute
+  '/kvitto/$id': typeof AuthenticatedKvittoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/ordrar': typeof AuthenticatedOrdrarRoute
+  '/_authenticated/oversikt': typeof AuthenticatedOversiktRoute
+  '/_authenticated/plattor': typeof AuthenticatedPlattorRoute
+  '/_authenticated/produktion': typeof AuthenticatedProduktionRoute
+  '/_authenticated/kvitto/$id': typeof AuthenticatedKvittoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/ordrar'
+    | '/oversikt'
+    | '/plattor'
+    | '/produktion'
+    | '/kvitto/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/ordrar'
+    | '/oversikt'
+    | '/plattor'
+    | '/produktion'
+    | '/kvitto/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/ordrar'
+    | '/_authenticated/oversikt'
+    | '/_authenticated/plattor'
+    | '/_authenticated/produktion'
+    | '/_authenticated/kvitto/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +133,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/ordrar': {
+      id: '/_authenticated/ordrar'
+      path: '/ordrar'
+      fullPath: '/ordrar'
+      preLoaderRoute: typeof AuthenticatedOrdrarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/oversikt': {
+      id: '/_authenticated/oversikt'
+      path: '/oversikt'
+      fullPath: '/oversikt'
+      preLoaderRoute: typeof AuthenticatedOversiktRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/plattor': {
+      id: '/_authenticated/plattor'
+      path: '/plattor'
+      fullPath: '/plattor'
+      preLoaderRoute: typeof AuthenticatedPlattorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/produktion': {
+      id: '/_authenticated/produktion'
+      path: '/produktion'
+      fullPath: '/produktion'
+      preLoaderRoute: typeof AuthenticatedProduktionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/kvitto/$id': {
+      id: '/_authenticated/kvitto/$id'
+      path: '/kvitto/$id'
+      fullPath: '/kvitto/$id'
+      preLoaderRoute: typeof AuthenticatedKvittoIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedOrdrarRoute: typeof AuthenticatedOrdrarRoute
+  AuthenticatedOversiktRoute: typeof AuthenticatedOversiktRoute
+  AuthenticatedPlattorRoute: typeof AuthenticatedPlattorRoute
+  AuthenticatedProduktionRoute: typeof AuthenticatedProduktionRoute
+  AuthenticatedKvittoIdRoute: typeof AuthenticatedKvittoIdRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedOrdrarRoute: AuthenticatedOrdrarRoute,
+  AuthenticatedOversiktRoute: AuthenticatedOversiktRoute,
+  AuthenticatedPlattorRoute: AuthenticatedPlattorRoute,
+  AuthenticatedProduktionRoute: AuthenticatedProduktionRoute,
+  AuthenticatedKvittoIdRoute: AuthenticatedKvittoIdRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
