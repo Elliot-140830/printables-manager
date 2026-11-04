@@ -12,6 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedEkonomiRouteImport } from './routes/_authenticated/ekonomi'
+import { Route as AuthenticatedFilamentRouteImport } from './routes/_authenticated/filament'
+import { Route as AuthenticatedInstallningarRouteImport } from './routes/_authenticated/installningar'
+import { Route as AuthenticatedModellerRouteImport } from './routes/_authenticated/modeller'
 import { Route as AuthenticatedOrdrarRouteImport } from './routes/_authenticated/ordrar'
 import { Route as AuthenticatedOversiktRouteImport } from './routes/_authenticated/oversikt'
 import { Route as AuthenticatedPlattorRouteImport } from './routes/_authenticated/plattor'
@@ -31,6 +35,27 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedEkonomiRoute = AuthenticatedEkonomiRouteImport.update({
+  id: '/ekonomi',
+  path: '/ekonomi',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFilamentRoute = AuthenticatedFilamentRouteImport.update({
+  id: '/filament',
+  path: '/filament',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInstallningarRoute =
+  AuthenticatedInstallningarRouteImport.update({
+    id: '/installningar',
+    path: '/installningar',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedModellerRoute = AuthenticatedModellerRouteImport.update({
+  id: '/modeller',
+  path: '/modeller',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedOrdrarRoute = AuthenticatedOrdrarRouteImport.update({
   id: '/ordrar',
@@ -61,6 +86,10 @@ const AuthenticatedKvittoIdRoute = AuthenticatedKvittoIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/ekonomi': typeof AuthenticatedEkonomiRoute
+  '/filament': typeof AuthenticatedFilamentRoute
+  '/installningar': typeof AuthenticatedInstallningarRoute
+  '/modeller': typeof AuthenticatedModellerRoute
   '/ordrar': typeof AuthenticatedOrdrarRoute
   '/oversikt': typeof AuthenticatedOversiktRoute
   '/plattor': typeof AuthenticatedPlattorRoute
@@ -70,6 +99,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/ekonomi': typeof AuthenticatedEkonomiRoute
+  '/filament': typeof AuthenticatedFilamentRoute
+  '/installningar': typeof AuthenticatedInstallningarRoute
+  '/modeller': typeof AuthenticatedModellerRoute
   '/ordrar': typeof AuthenticatedOrdrarRoute
   '/oversikt': typeof AuthenticatedOversiktRoute
   '/plattor': typeof AuthenticatedPlattorRoute
@@ -81,6 +114,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/ekonomi': typeof AuthenticatedEkonomiRoute
+  '/_authenticated/filament': typeof AuthenticatedFilamentRoute
+  '/_authenticated/installningar': typeof AuthenticatedInstallningarRoute
+  '/_authenticated/modeller': typeof AuthenticatedModellerRoute
   '/_authenticated/ordrar': typeof AuthenticatedOrdrarRoute
   '/_authenticated/oversikt': typeof AuthenticatedOversiktRoute
   '/_authenticated/plattor': typeof AuthenticatedPlattorRoute
@@ -92,6 +129,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/ekonomi'
+    | '/filament'
+    | '/installningar'
+    | '/modeller'
     | '/ordrar'
     | '/oversikt'
     | '/plattor'
@@ -101,6 +142,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/ekonomi'
+    | '/filament'
+    | '/installningar'
+    | '/modeller'
     | '/ordrar'
     | '/oversikt'
     | '/plattor'
@@ -111,6 +156,10 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/ekonomi'
+    | '/_authenticated/filament'
+    | '/_authenticated/installningar'
+    | '/_authenticated/modeller'
     | '/_authenticated/ordrar'
     | '/_authenticated/oversikt'
     | '/_authenticated/plattor'
@@ -146,6 +195,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/ekonomi': {
+      id: '/_authenticated/ekonomi'
+      path: '/ekonomi'
+      fullPath: '/ekonomi'
+      preLoaderRoute: typeof AuthenticatedEkonomiRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/filament': {
+      id: '/_authenticated/filament'
+      path: '/filament'
+      fullPath: '/filament'
+      preLoaderRoute: typeof AuthenticatedFilamentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/installningar': {
+      id: '/_authenticated/installningar'
+      path: '/installningar'
+      fullPath: '/installningar'
+      preLoaderRoute: typeof AuthenticatedInstallningarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/modeller': {
+      id: '/_authenticated/modeller'
+      path: '/modeller'
+      fullPath: '/modeller'
+      preLoaderRoute: typeof AuthenticatedModellerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/ordrar': {
       id: '/_authenticated/ordrar'
@@ -186,6 +263,10 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedEkonomiRoute: typeof AuthenticatedEkonomiRoute
+  AuthenticatedFilamentRoute: typeof AuthenticatedFilamentRoute
+  AuthenticatedInstallningarRoute: typeof AuthenticatedInstallningarRoute
+  AuthenticatedModellerRoute: typeof AuthenticatedModellerRoute
   AuthenticatedOrdrarRoute: typeof AuthenticatedOrdrarRoute
   AuthenticatedOversiktRoute: typeof AuthenticatedOversiktRoute
   AuthenticatedPlattorRoute: typeof AuthenticatedPlattorRoute
@@ -194,6 +275,10 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedEkonomiRoute: AuthenticatedEkonomiRoute,
+  AuthenticatedFilamentRoute: AuthenticatedFilamentRoute,
+  AuthenticatedInstallningarRoute: AuthenticatedInstallningarRoute,
+  AuthenticatedModellerRoute: AuthenticatedModellerRoute,
   AuthenticatedOrdrarRoute: AuthenticatedOrdrarRoute,
   AuthenticatedOversiktRoute: AuthenticatedOversiktRoute,
   AuthenticatedPlattorRoute: AuthenticatedPlattorRoute,
