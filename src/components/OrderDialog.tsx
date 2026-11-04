@@ -38,14 +38,14 @@ export function OrderDialog({ open, onOpenChange, order }: { open: boolean; onOp
   const colors = Array.from(new Set(filaments.map((x) => x.color)));
   const addLine = () => {
     const p = products[0];
-    if (!p) return toast.error("Lägg till en modell först");
+    if (!p) { toast.error("Lägg till en modell först"); return; }
     setLines([...lines, { product_id: p.id, color: p.default_color, quantity: 1, unit_price: productPrice(p, rates) }]);
   };
   const upd = (i: number, patch: Partial<Line>) => setLines(lines.map((l, j) => (j === i ? { ...l, ...patch } : l)));
 
   async function save() {
-    if (!f.customer_name.trim()) return toast.error("Ange kundnamn");
-    if (lines.length === 0) return toast.error("Lägg till minst en produkt");
+    if (!f.customer_name.trim()) { toast.error("Ange kundnamn"); return; }
+    if (lines.length === 0) { toast.error("Lägg till minst en produkt"); return; }
     setBusy(true);
     try {
       const payload = { ...f, delivery_date: f.delivery_date || null, notes: f.notes || null } as never;

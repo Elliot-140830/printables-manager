@@ -37,9 +37,9 @@ function Plates() {
   const suggestions = Object.entries(groups).filter(([k]) => !rejected.includes(k));
 
   async function approve(key: string) {
-    for (const id of groups[key].orderIds) {
-      const o = orders.find((x) => x.id === id)!;
-      await setOrderStatus(o, "planerad");
+    for (const id of groups[key]?.orderIds ?? []) {
+      const o = orders.find((x) => x.id === id);
+      if (o) await setOrderStatus(o, "planerad");
     }
     toast.success("Plattan godkänd – ordrarna är planerade");
     invalidate("orders");

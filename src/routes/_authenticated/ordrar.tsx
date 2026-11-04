@@ -35,13 +35,13 @@ function OrdersPage() {
 
   async function togglePaid(o: OrderWithItems) {
     const { error } = await supabase.from("orders").update({ paid: !o.paid }).eq("id", o.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     invalidate("orders");
   }
   async function remove() {
     if (!del) return;
     const { error } = await supabase.from("orders").delete().eq("id", del.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Ordern borttagen");
     setDel(null);
     invalidate("orders");

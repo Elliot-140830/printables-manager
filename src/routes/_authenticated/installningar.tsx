@@ -37,7 +37,7 @@ function SettingsPage() {
 
   async function patch(p: Partial<Settings>) {
     const { error } = await supabase.from("settings").update(p).eq("id", 1);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     invalidate("settings");
   }
   async function updAlloc(id: string, percent: number) {
