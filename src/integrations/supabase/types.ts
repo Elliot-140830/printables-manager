@@ -14,7 +14,252 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      allocations: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          percent: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          percent?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          percent?: number
+        }
+        Relationships: []
+      }
+      expenses: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string
+          date: string
+          description: string
+          id: string
+        }
+        Insert: {
+          amount: number
+          category?: string
+          created_at?: string
+          date?: string
+          description: string
+          id?: string
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string
+          date?: string
+          description?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      filaments: {
+        Row: {
+          brand: string
+          color: string
+          created_at: string
+          id: string
+          pla_type: string
+          remaining_grams: number
+          spool_weight: number
+          warning_threshold: number
+        }
+        Insert: {
+          brand?: string
+          color: string
+          created_at?: string
+          id?: string
+          pla_type?: string
+          remaining_grams?: number
+          spool_weight?: number
+          warning_threshold?: number
+        }
+        Update: {
+          brand?: string
+          color?: string
+          created_at?: string
+          id?: string
+          pla_type?: string
+          remaining_grams?: number
+          spool_weight?: number
+          warning_threshold?: number
+        }
+        Relationships: []
+      }
+      order_items: {
+        Row: {
+          color: string
+          grams: number
+          id: string
+          order_id: string
+          product_id: string | null
+          product_name: string
+          quantity: number
+          unit_price: number
+        }
+        Insert: {
+          color: string
+          grams?: number
+          id?: string
+          order_id: string
+          product_id?: string | null
+          product_name: string
+          quantity?: number
+          unit_price?: number
+        }
+        Update: {
+          color?: string
+          grams?: number
+          id?: string
+          order_id?: string
+          product_id?: string | null
+          product_name?: string
+          quantity?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          customer_name: string
+          delivery_date: string | null
+          filament_deducted: boolean
+          id: string
+          notes: string | null
+          order_number: number
+          paid: boolean
+          payment_method: Database["public"]["Enums"]["payment_method"]
+          priority: Database["public"]["Enums"]["order_priority"]
+          status: Database["public"]["Enums"]["order_status"]
+        }
+        Insert: {
+          created_at?: string
+          customer_name: string
+          delivery_date?: string | null
+          filament_deducted?: boolean
+          id?: string
+          notes?: string | null
+          order_number?: number
+          paid?: boolean
+          payment_method?: Database["public"]["Enums"]["payment_method"]
+          priority?: Database["public"]["Enums"]["order_priority"]
+          status?: Database["public"]["Enums"]["order_status"]
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string
+          delivery_date?: string | null
+          filament_deducted?: boolean
+          id?: string
+          notes?: string | null
+          order_number?: number
+          paid?: boolean
+          payment_method?: Database["public"]["Enums"]["payment_method"]
+          priority?: Database["public"]["Enums"]["order_priority"]
+          status?: Database["public"]["Enums"]["order_status"]
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          created_at: string
+          default_color: string
+          description: string | null
+          grams: number
+          id: string
+          image_path: string | null
+          material: string
+          name: string
+          price_override: number | null
+          print_minutes: number
+          stl_path: string | null
+        }
+        Insert: {
+          created_at?: string
+          default_color?: string
+          description?: string | null
+          grams?: number
+          id?: string
+          image_path?: string | null
+          material?: string
+          name: string
+          price_override?: number | null
+          print_minutes?: number
+          stl_path?: string | null
+        }
+        Update: {
+          created_at?: string
+          default_color?: string
+          description?: string | null
+          grams?: number
+          id?: string
+          image_path?: string | null
+          material?: string
+          name?: string
+          price_override?: number | null
+          print_minutes?: number
+          stl_path?: string | null
+        }
+        Relationships: []
+      }
+      settings: {
+        Row: {
+          id: number
+          notify_deliveries: boolean
+          notify_low_filament: boolean
+          notify_production: boolean
+          notify_unpaid: boolean
+          price_per_gram: number
+          price_per_minute: number
+          tax_percent: number
+        }
+        Insert: {
+          id?: number
+          notify_deliveries?: boolean
+          notify_low_filament?: boolean
+          notify_production?: boolean
+          notify_unpaid?: boolean
+          price_per_gram?: number
+          price_per_minute?: number
+          tax_percent?: number
+        }
+        Update: {
+          id?: number
+          notify_deliveries?: boolean
+          notify_low_filament?: boolean
+          notify_production?: boolean
+          notify_unpaid?: boolean
+          price_per_gram?: number
+          price_per_minute?: number
+          tax_percent?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +268,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      order_priority: "lag" | "normal" | "hog"
+      order_status:
+        | "vantar"
+        | "planerad"
+        | "printas"
+        | "efterarbete"
+        | "klar"
+        | "levererad"
+      payment_method: "swish" | "kontant"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +403,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      order_priority: ["lag", "normal", "hog"],
+      order_status: [
+        "vantar",
+        "planerad",
+        "printas",
+        "efterarbete",
+        "klar",
+        "levererad",
+      ],
+      payment_method: ["swish", "kontant"],
+    },
   },
 } as const
